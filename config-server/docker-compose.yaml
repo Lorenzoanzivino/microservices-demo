@@ -1,0 +1,7 @@
+
+services:
+  configserver:
+    image: configserver:latest
+    build: /.
+    ports:
+      - 8071:8071

@@ -1,0 +1,21 @@
+#spring.application.name=config-server
+spring:
+  application:
+    name: config-server
+  profiles:
+    #active: vault #profilo attivo per usare Vault
+    active: native #profilo attivo per usare il classpath o il disco
+  cloud:
+    config:
+      server:
+        native:
+           search-locations: classpath:/config  #il percorso nel classpath dove sono i file di configurazione
+        #vault:
+          #port: 8200 
+          #host: 127.0.0.1 
+          #kvVersion: 1
+    compatibility-verifier:
+      enabled: false
+         
+server:
+  port: 8071

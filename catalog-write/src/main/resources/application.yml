@@ -1,15 +1,10 @@
-server:
-  port: 8081
-
 spring:
   application:
     name: catalog-write
+  profiles:
+    active: dev
+  config:
+    import: "optional:configserver:http://localhost:8071" # La porta del tuo config-server!
 
-  datasource:
-    url: jdbc:postgresql://localhost:5432/catalog
-    username: postgres
-    password: ${DB_PASSWORD}
-
-  jpa:
-    hibernate:
-      ddl-auto: update
+server:
+  port: 8081

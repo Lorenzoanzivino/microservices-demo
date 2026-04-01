@@ -1,0 +1,9 @@
+
+services:
+  eurekaserver:
+    image: eurekaserver:latest
+    build: /.
+    ports:
+      - 8070:8070
+    environment:
+      spring.config.import: optional:configserver:http://configserver:8071

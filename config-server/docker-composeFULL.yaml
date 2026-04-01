@@ -1,0 +1,36 @@
+
+services:
+  configserver:
+    image: configserver:latest
+    build: /.
+    ports:
+      - 8071:8071
+  eurekaserver:
+    image: eurekaserver:latest
+    build: /../MM_quiz_Eureka_Server
+    ports:
+      - 8070:8070
+    environment:
+      spring.config.import: optional:configserver:http://configserver:8071
+    depends_on:
+      - configserver
+  db_wr:
+    image: mysql:latest
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=db_domande_wr_dev
+    ports:
+      - 3307:3306
+  quizwrite:
+    image: quizwrite:latest
+    build: /../MM_quiz_WR
+    ports:
+      - 8082:8082
+    environment:
+      spring.config.import: optional:configserver:http://configserver:8071
+      spring.datasource.url: jdbc:mysql://db_wr:3306/db_domande_wr_dev?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true
+      eureka.client.serviceUrl.defaultZone: http://eurekaserver:8070/eureka/
+    depends_on:
+      - db_wr
+      - eurekaserver

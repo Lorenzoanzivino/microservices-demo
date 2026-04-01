@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: MM_quiz_Eureka_Server
+  profiles:
+    active: dev 
+  config:
+    import: optional:configserver:http://localhost:8071
+   
