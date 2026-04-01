@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # Il Database fisico (PostgreSQL)
+  catalog-db:
+    image: postgres:17
+    container_name: catalog-db
+    environment:
+      - POSTGRES_DB=catalog       # Nome del database fisico
+      - POSTGRES_USER=postgres    # Utente amministratore
+      - POSTGRES_PASSWORD=postgres # Password
+    ports:
+      - "5432:5432"
+    networks:
+      - catalog-network
+
+  # L'applicazione Java (Catalog-Write)
+  catalog-write:
+    build: .
+    container_name: catalog-write
+    ports:
+      - "8081:8081"
+    environment:
+      # Configurazione JPA per connettersi al container DB
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://catalog-db:5432/catalog
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      # Teoria Slide: Attiva l'autogenerazione delle tabelle
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      # Teoria Slide: Mostra i log SQL eseguiti da Hibernate
+      - SPRING_JPA_SHOW_SQL=true
+    depends_on:
+      - catalog-db
+    networks:
+      - catalog-network
+
+networks:
+  catalog-network:
+    driver: bridge
