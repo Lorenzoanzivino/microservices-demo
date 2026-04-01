@@ -1,15 +1,20 @@
-package it.demo.config;
+package com.lorenzo.discoveryserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
+/**
+ * Service Discovery Server (Eureka).
+ * Acts as a central registry for all microservices in the ecosystem.
+ * Dashboard available at: http://localhost:8761 (default port)
+ */
 @SpringBootApplication
-@EnableEurekaServer //dashboard su http://localhost:8070/
-public class MmQuizEurekaServerApplication {
+@EnableEurekaServer
+public class DiscoveryServerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MmQuizEurekaServerApplication.class, args);
+		SpringApplication.run(DiscoveryServerApplication.class, args);
 	}
 
 }

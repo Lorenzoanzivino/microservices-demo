@@ -1,8 +1,12 @@
 spring:
   application:
-    name: MM_quiz_Eureka_Server
+    name: discovery-server
   profiles:
-    active: dev 
+    active: dev
   config:
-    import: optional:configserver:http://localhost:8071
-   
+    # SECURITY NOTE: Using HTTP for local development on localhost.
+    # Production environments MUST use HTTPS with TLS termination.
+    import: "optional:configserver:http://localhost:8071"
+
+server:
+  port: 8761
