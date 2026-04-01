@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: api-gateway
+  profiles:
+    active: dev
+  config:
+    import: "optional:configserver:http://localhost:8071"
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # Genera rotte automatiche basate sui nomi su Eureka
+          lower-case-service-id: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "gateway,refresh,health,info"
